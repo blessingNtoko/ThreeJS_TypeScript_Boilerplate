@@ -1,5 +1,7 @@
 import './style.css';
 import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import Stats from 'three/addons/libs/stats.module.js';
 
 const scene = new THREE.Scene();
 
@@ -12,9 +14,11 @@ document.body.appendChild(renderer.domElement);
 
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
-  camera.UpdateProjectionMatrix();
+  camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
+new OrbitControls(camera, renderer.domElement);
 
 const geometry = new THREE.BoxGeometry();
 const material = new THREE.MeshNormalMaterial({ wireframe: true });
@@ -22,13 +26,18 @@ const material = new THREE.MeshNormalMaterial({ wireframe: true });
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
+const stats = new Stats();
+document.body.appendChild(stats.dom);
+
 function animate() {
   requestAnimationFrame(animate);
 
-  cube.rotation.x += .01;
-  cube.rotation.y += .01;
+  // cube.rotation.x += .01;
+  // cube.rotation.y += .01;
 
   renderer.render(scene, camera);
+
+  stats.update();
 }
 
 animate();
