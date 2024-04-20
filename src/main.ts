@@ -9,6 +9,8 @@ scene.add(new THREE.GridHelper());
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, .1, 1000);
 camera.lookAt(0, .5, 0);
 
+let moveCam = true;
+
 const cameraPosition1 = new THREE.Vector3(3, .5, 3);
 const cameraPosition2 = new THREE.Vector3(3, .5, -3);
 const cameraPosition3 = new THREE.Vector3(-3, .5, -3);
@@ -17,26 +19,31 @@ const cameraPosition4 = new THREE.Vector3(-3, .5, 3);
 camera.position.set(cameraPosition1.x, cameraPosition1.y, cameraPosition1.z);
 
 function camMove() {
-  // Square
-  if (camera.position.x === cameraPosition2.x && camera.position.z > cameraPosition2.z) {
-    camera.position.z -= 0.01;
-  } else if (camera.position.x === cameraPosition2.x && camera.position.z < cameraPosition2.z) {
-    camera.position.set(cameraPosition2.x, cameraPosition2.y, cameraPosition2.z);
-    camera.position.x -= .01;
-  } else if (camera.position.x > cameraPosition3.x && camera.position.z === cameraPosition3.z) {
-    camera.position.x -= .01;
-  } else if (camera.position.x < cameraPosition3.x && camera.position.z === cameraPosition3.z) {
-    camera.position.set(cameraPosition3.x, cameraPosition3.y, cameraPosition3.z);
-    camera.position.z += .01;
-  } else if (camera.position.x === cameraPosition4.x && camera.position.z < cameraPosition4.z) {
-    camera.position.z += .01;
-  } else if (camera.position.x === cameraPosition4.x && camera.position.z > cameraPosition4.z) {
-    camera.position.set(cameraPosition4.x, cameraPosition4.y, cameraPosition4.z);
-    camera.position.x += .01;
-  } else if (camera.position.x < cameraPosition1.x && camera.position.z === cameraPosition1.z) {
-    camera.position.x += .01;
-  } else {
-    camera.position.set(cameraPosition1.x, cameraPosition1.y, cameraPosition1.z);
+  if (moveCam) {
+    // Square
+    if (camera.position.x === cameraPosition2.x && camera.position.z > cameraPosition2.z) {
+      camera.position.z -= 0.01;
+    } else if (camera.position.x === cameraPosition2.x && camera.position.z < cameraPosition2.z) {
+      camera.position.set(cameraPosition2.x, cameraPosition2.y, cameraPosition2.z);
+      camera.position.x -= .01;
+    } else if (camera.position.x > cameraPosition3.x && camera.position.z === cameraPosition3.z) {
+      camera.position.x -= .01;
+    } else if (camera.position.x < cameraPosition3.x && camera.position.z === cameraPosition3.z) {
+      camera.position.set(cameraPosition3.x, cameraPosition3.y, cameraPosition3.z);
+      camera.position.z += .01;
+    } else if (camera.position.x === cameraPosition4.x && camera.position.z < cameraPosition4.z) {
+      camera.position.z += .01;
+    } else if (camera.position.x === cameraPosition4.x && camera.position.z > cameraPosition4.z) {
+      camera.position.set(cameraPosition4.x, cameraPosition4.y, cameraPosition4.z);
+      camera.position.x += .01;
+    } else if (camera.position.x < cameraPosition1.x && camera.position.z === cameraPosition1.z) {
+      camera.position.x += .01;
+    } else {
+      camera.position.set(cameraPosition1.x, cameraPosition1.y, cameraPosition1.z);
+    }
+  
+    // Triangle
+    // Circle
   }
 
 
@@ -96,5 +103,9 @@ function animate() {
 
   stats.update();
 }
+
+document.getElementById("cameraToggle")?.addEventListener("click", () => {
+  moveCam = !moveCam;
+});
 
 animate();
